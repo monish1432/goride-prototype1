@@ -49,7 +49,7 @@ export default function Login() {
   const pickRole = async (role) => {
     setBusy(true);
     try {
-      await api.post("/auth/select-role", { role, name: name || null });
+      await api.post("https://goride-backend-4bnx.onrender.com/api/users/role", ...);
       await refresh();
       toast.success(`Onboarded as ${role}`);
       nav(`/${role}`);
