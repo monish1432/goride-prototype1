@@ -20,7 +20,7 @@ export default function Login() {
     if (!phone || phone.replace(/\D/g, "").length < 8) return toast.error("Enter a valid phone number");
     setBusy(true);
     try {
-      const { data } = await api.post("/auth/send-otp", { phone });
+     const { data } = await api.post("https://goride-backend-4bnx.onrender.com/api/auth/send-otp", { phone });
       setDemoOtp(data.demo_otp || "123456");
       setStep("otp");
       toast.success(`OTP sent. Demo code: ${data.demo_otp}`);
@@ -33,7 +33,7 @@ export default function Login() {
     e?.preventDefault();
     setBusy(true);
     try {
-      const { data } = await api.post("/auth/verify-otp", { phone, otp });
+     const { data } = await api.post("https://goride-backend-4bnx.onrender.com/api/auth/verify-otp", { phone, otp });
       await login(data.token);
       if (!data.user.role) {
         setStep("role");
