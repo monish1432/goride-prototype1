@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gr-yellow: #FFCC00;
+  --gr-yellow-dark: #E6B800;
+  --gr-ink: #0A0A0A;
+  --gr-ink-2: #171717;
+  --gr-paper: #FAFAFA;
+  --gr-line: #E5E5E5;
+}
+
+html, body {
+  margin: 0;
+  background: var(--gr-paper);
+  color: var(--gr-ink);
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
+    --primary: 47 100% 50%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 32%;
+    --accent: 0 0% 92%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 4%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}
+
+/* Hero grid texture */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(10,10,10,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10,10,10,0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Yellow blob accent */
+.blob-yellow {
+  background: radial-gradient(closest-side, rgba(255,204,0,0.55), rgba(255,204,0,0));
+  filter: blur(40px);
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee 32s linear infinite; }
+
+/* Status pulse */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.status-dot { animation: pulse-dot 1.4s ease-in-out infinite; }
+
+/* Custom Leaflet marker */
+.gr-pin {
+  background: #0A0A0A;
+  color: #FFCC00;
+  border-radius: 9999px;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+  border: 2px solid #FFCC00;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  font-family: 'Outfit', sans-serif;
+}
+.gr-pin.drop { background: #FFCC00; color: #0A0A0A; border-color: #0A0A0A; }
+
+.leaflet-container { font-family: 'IBM Plex Sans', sans-serif; }
+
+/* Hide leaflet attribution prefix on small screens for cleaner look */
+.leaflet-control-attribution { font-size: 10px; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d4d4d4; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #a3a3a3; }
+
+/* Card */
+.gr-card {
+  @apply bg-white border border-neutral-200 rounded-2xl;
+}
+
+/* Pill */
+.gr-pill {
+  @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
+}
+
+/* Yellow CTA */
+.gr-cta {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-[#FFCC00] text-black font-semibold px-5 py-3 transition active:scale-[0.97] hover:bg-[#E6B800] disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.gr-cta-dark {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-neutral-900 text-white font-semibold px-5 py-3 transition active:scale-[0.97] hover:bg-black disabled:opacity-50;
+}
+.gr-ghost {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-white border border-neutral-200 text-neutral-900 font-semibold px-4 py-2.5 transition hover:bg-neutral-50;
+}

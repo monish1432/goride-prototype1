@@ -1,0 +1,90 @@
+{
+  "theme": "Light",
+  "archetype": "Archetype 4 (Swiss & High-Contrast)",
+  "rationale": "For a mobility and logistics app (GoRide), we need high trust, functional clarity, and high visibility on the road. The Swiss & High-Contrast archetype ensures strong data hierarchy and readability for drivers in sunlight, while bright accents (Taxi Yellow) provide clear calls to action.",
+  "typography": {
+    "font_imports": "@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Outfit:wght@400;600;800&display=swap');",
+    "headings": {
+      "fontFamily": "Outfit, sans-serif",
+      "weights": ["600", "800"],
+      "classes": "font-['Outfit'] tracking-tight"
+    },
+    "body": {
+      "fontFamily": "IBM Plex Sans, sans-serif",
+      "weights": ["400", "500", "600"],
+      "classes": "font-['IBM_Plex_Sans']"
+    },
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tighter text-slate-950",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900",
+      "h3": "text-xl sm:text-2xl font-semibold tracking-tight text-slate-800",
+      "body": "text-base leading-relaxed text-slate-700",
+      "small_label": "text-xs font-semibold uppercase tracking-[0.1em] text-slate-500"
+    }
+  },
+  "colors": {
+    "background": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text_primary": "#0A0A0A",
+    "text_secondary": "#525252",
+    "primary": "#FFCC00",
+    "primary_foreground": "#0A0A0A",
+    "secondary": "#10B981",
+    "secondary_foreground": "#FFFFFF",
+    "accent": "#EF4444",
+    "accent_foreground": "#FFFFFF",
+    "border": "#E5E5E5",
+    "muted": "#F5F5F5",
+    "muted_foreground": "#737373"
+  },
+  "spacing_and_layout": {
+    "philosophy": "Functional utility meets modern brutalism. High density for Admin, generous tap targets for Mobile Customer/Worker apps.",
+    "containers": "Use rounded-xl for main cards, p-4 to p-6 padding. Avoid soft massive shadows; use 1px solid borders (border-slate-200) with shadow-sm.",
+    "grid_strategy": {
+      "marketing": "Asymmetric bento grids (grid-cols-1 md:grid-cols-12 gap-8) for feature showcases.",
+      "dashboard_admin": "Strict Control Room Grid (grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6).",
+      "mobile_app": "Bottom sheet overlays over a full-bleed Leaflet map. Map must be fixed to background."
+    }
+  },
+  "components": {
+    "buttons": "Sharp or slightly rounded (rounded-md). CTAs must be highly visible (bg-[#FFCC00] text-black). Include hover states (hover:bg-[#E6B800]) and focus rings.",
+    "cards": "Solid white backgrounds with 1px border. No glassmorphism to maintain strict contrast for map visibility.",
+    "forms": "Inputs should have light gray backgrounds (bg-slate-50) with border-slate-200. Focus should change border to black.",
+    "map": "Leaflet map should use a minimal/light tile layer if possible, avoiding overly cluttered labels to highlight routes and vehicles."
+  },
+  "motion": {
+    "micro_interactions": "All buttons should use active:scale-95 transition-transform duration-150.",
+    "page_transitions": "Fade-in for page loads. Slide-up for bottom sheets (mobile map UI).",
+    "accessibility": "Respect prefers-reduced-motion."
+  },
+  "icons": {
+    "library": "lucide-react",
+    "usage": "Use crisp, 2px stroke icons. Keep icon sizes consistent (w-5 h-5 for inline, w-6 h-6 for standalone buttons)."
+  },
+  "image_urls": [
+    {
+      "category": "hero",
+      "url": "https://images.pexels.com/photos/35755244/pexels-photo-35755244.jpeg",
+      "description": "Three CNG auto rickshaws on a busy tree-lined street, showcasing urban Indian transportation. Use as the main visual for the marketing landing page."
+    },
+    {
+      "category": "worker_persona",
+      "url": "https://images.pexels.com/photos/7363095/pexels-photo-7363095.jpeg",
+      "description": "A smiling delivery driver in uniform seated inside his van, holding a smartphone. Use in the Worker/Driver marketing section or onboarding."
+    },
+    {
+      "category": "logistics_persona",
+      "url": "https://images.unsplash.com/photo-1739066483899-356fbe508341?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzd8MHwxfHNlYXJjaHwyfHxjb21tZXJjaWFsJTIwZGVsaXZlcnklMjB0cnVjayUyMHRlbXBvJTIwc3RyZWV0fGVufDB8fHx8MTc3NzM1ODAxNnww&ixlib=rb-4.1.0&q=85",
+      "description": "Commercial delivery vehicles. Use for the Goods/Logistics feature showcase."
+    }
+  ],
+  "instructions_to_main_agent": [
+    "Setup Tailwind with the custom color palette and typography specified in this JSON. Import Outfit and IBM Plex Sans in index.html.",
+    "Construct a single-page or multi-page app with React Router. Include: Landing Page, Auth Page, Customer Dashboard, Worker Dashboard, and Admin Dashboard.",
+    "Mock Auth Flow: Request phone number, then OTP. Accept '123456' as valid. Post-OTP, display a role selection screen (Customer, Worker, Admin).",
+    "Customer App: Mobile-first view. Full-screen Leaflet Map. Bottom sliding panel for selecting service (Ride vs Logistics), entering pickup/drop, and showing estimated fares (Bike ₹15-25/km, Auto ₹18/km, Car ₹25-35/km, Tempo ₹40/km, Truck ₹60/km). Simulate live tracking timeline.",
+    "Worker App: Toggle for Online/Offline. Incoming request cards with Accept/Reject. 'Worker Wallet' page emphasizing the zero-commission model with flat ₹1 platform fee deduction.",
+    "Admin App: Dense data grid layout (Control Room Grid). Show stats for rides, revenue from ₹1 fees, active drivers, and active customers.",
+    "CRITICAL: Add `data-testid` attributes to all interactive elements, forms, map markers, and cards (e.g., data-testid='login-submit-button', data-testid='role-customer-btn')."
+  ]
+}
