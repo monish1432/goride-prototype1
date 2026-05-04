@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const api = axios.create({
-    // Notice the /api at the very end! This is crucial.
-    baseURL: "https://goride-backend-4bnx.onrender.com/api" 
+const api = axios.create({
+    baseURL: "https://goride-backend-4bnx.onrender.com"
 });
 
+export { api };
 export default api;
