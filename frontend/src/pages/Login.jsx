@@ -49,8 +49,8 @@ export default function Login() {
  const pickRole = async (role) => {
     setBusy(true);
     try {
-      // We removed the dots and put the actual data { role, name } inside the brackets!
-      await api.post("https://goride-backend-4bnx.onrender.com/api/users/role", { role, name });
+      // Pointing exactly to your Python backend's route!
+      await api.post("/auth/select-role", { role, name });
       await refresh();
       toast.success(`Onboarded as ${role}`);
       nav(`/${role}`);
@@ -58,6 +58,7 @@ export default function Login() {
       toast.error("Could not save role");
     } finally { setBusy(false); }
   };
+  
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* Left visual */}
