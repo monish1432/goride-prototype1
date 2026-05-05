@@ -32,15 +32,12 @@ export default function Login() {
     e?.preventDefault();
     setBusy(true);
     try {
-      // 1. Ask backend to verify OTP
       const { data } = await api.post("/auth/verify-otp", { phone, otp });
       
-      // 2. FORCE SAVE THE TOKEN directly to local storage!
       if (data.token) {
          localStorage.setItem("token", data.token);
       }
       
-      // 3. Move to role selection screen
       setStep("role");
       toast.success("Verified!");
     } catch (err) {
@@ -48,25 +45,18 @@ export default function Login() {
     } finally { setBusy(false); }
   };
 
-  const pickRole = async (role) => {
+ const pickRole = async (role) => {
     setBusy(true);
     try {
-      // 1. Manually pull the token we just saved
       const rawToken = localStorage.getItem("token");
-
-      // 2. FORCE ATTACH the token to this specific request just in case the interceptor fails
-      await api.post("/auth/select-role", 
-        { role, name }, 
-        { 
-          headers: { Authorization: `Bearer ${rawToken}` } 
-        }
-      );
+      await api.post("/auth/select-role", { role, name }, { headers: { Authorization: `Bearer ${rawToken}` } });
       
-      // 3. Success! Go to dashboard.
+      if (typeof login === 'function') {
+         await login(rawToken); 
+      }
+      
       toast.success(`Onboarded as ${role}`);
-      
-      // If you have a refresh/login context function, call it here, otherwise just navigate:
-      window.location.href = `/${role.toLowerCase()}`; 
+      nav(`/${role}`); 
       
     } catch (err) {
       toast.error("Could not save role");
