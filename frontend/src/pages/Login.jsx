@@ -17,13 +17,12 @@ export default function Login() {
 
   const sendOtp = async (e) => {
     e?.preventDefault();
-    if (!phone || phone.replace(/\D/g, "").length < 8) return toast.error("Enter a valid phone number");
     setBusy(true);
     try {
-     const { data } = await api.post("https://goride-backend-4bnx.onrender.com/api/auth/send-otp", { phone });
+      const { data } = await api.post("/auth/send-otp", { phone });
       setDemoOtp(data.demo_otp || "123456");
       setStep("otp");
-      toast.success(`OTP sent. Demo code: ${data.demo_otp}`);
+      toast.success(`OTP sent. Demo code: ${data.demo_otp || "123456"}`);
     } catch (err) {
       toast.error(err.response?.data?.detail || "Could not send OTP");
     } finally { setBusy(false); }
@@ -33,29 +32,45 @@ export default function Login() {
     e?.preventDefault();
     setBusy(true);
     try {
-     const { data } = await api.post("https://goride-backend-4bnx.onrender.com/api/auth/verify-otp", { phone, otp });
-      await login(data.token);
-      if (!data.user.role) {
-        setStep("role");
-      } else {
-        toast.success(`Welcome back, ${data.user.name || phone}`);
-        nav(`/${data.user.role}`);
+      // 1. Ask backend to verify OTP
+      const { data } = await api.post("/auth/verify-otp", { phone, otp });
+      
+      // 2. FORCE SAVE THE TOKEN directly to local storage!
+      if (data.token) {
+         localStorage.setItem("token", data.token);
       }
+      
+      // 3. Move to role selection screen
+      setStep("role");
+      toast.success("Verified!");
     } catch (err) {
       toast.error(err.response?.data?.detail || "Invalid OTP");
     } finally { setBusy(false); }
   };
 
- const pickRole = async (role) => {
+  const pickRole = async (role) => {
     setBusy(true);
     try {
-      // The FULL absolute URL. It cannot fail or get confused now.
-      await api.post("https://goride-backend-4bnx.onrender.com/api/auth/select-role", { role, name });
-      await refresh();
+      // 1. Manually pull the token we just saved
+      const rawToken = localStorage.getItem("token");
+
+      // 2. FORCE ATTACH the token to this specific request just in case the interceptor fails
+      await api.post("/auth/select-role", 
+        { role, name }, 
+        { 
+          headers: { Authorization: `Bearer ${rawToken}` } 
+        }
+      );
+      
+      // 3. Success! Go to dashboard.
       toast.success(`Onboarded as ${role}`);
-      nav(`/${role}`);
+      
+      // If you have a refresh/login context function, call it here, otherwise just navigate:
+      window.location.href = `/${role.toLowerCase()}`; 
+      
     } catch (err) {
       toast.error("Could not save role");
+      console.error(err);
     } finally { setBusy(false); }
   };
   
