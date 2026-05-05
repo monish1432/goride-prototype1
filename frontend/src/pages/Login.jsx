@@ -49,8 +49,8 @@ export default function Login() {
  const pickRole = async (role) => {
     setBusy(true);
     try {
-      // Pointing exactly to your Python backend's route!
-      await api.post("/auth/select-role", { role, name });
+      // The FULL absolute URL. It cannot fail or get confused now.
+      await api.post("https://goride-backend-4bnx.onrender.com/api/auth/select-role", { role, name });
       await refresh();
       toast.success(`Onboarded as ${role}`);
       nav(`/${role}`);
