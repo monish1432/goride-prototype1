@@ -4,7 +4,7 @@ const api = axios.create({
     baseURL: "https://goride-backend-4bnx.onrender.com/api"
 });
 
-// The magic security pass we accidentally deleted!
+// This is the missing security guard! It attaches your login token.
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem("token"); 
     if (token) {
